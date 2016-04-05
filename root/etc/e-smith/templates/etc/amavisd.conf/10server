@@ -42,4 +42,7 @@ $policy_bank\{'SUBMISSION'\} = \{
 $smtp_connection_cache_on_demand = 0;
 $smtp_connection_cache_enable = 0;
 
+# Optimize timeout for pre-queue setup
+$child_timeout = 45;
+
 
