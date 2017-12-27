@@ -12,7 +12,7 @@ foreach my $domain (@domains) {
     next if (-f "/etc/opendkim/keys/$domainName.private");
     next if (-f "/etc/opendkim/keys/$domainName.txt");
 
-    system ("/usr/sbin/opendkim-genkey -D /etc/opendkim/keys/ -d $domainName -s $domainName") == '0'||
+    system ("/usr/sbin/opendkim-genkey -b 2048 -D /etc/opendkim/keys/ -d $domainName -s $domainName") == '0'||
             die "Opendkim cannot create keys for $domainName: $?";
 }
 
