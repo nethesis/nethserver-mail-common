@@ -30,6 +30,10 @@ my @templates = qw(
     /etc/postfix/transport
     /etc/postfix/access.cidr
     /etc/postfix/mynetworks.cidr
+    /etc/opendkim.conf
+    /etc/opendkim/TrustedHosts
+    /etc/opendkim/KeyTable
+    /etc/opendkim/SigningTable
 );
 
 #
@@ -48,7 +52,8 @@ event_actions('nethserver-mail-common-update',
 
 event_services('nethserver-mail-common-update',
 	       'postfix' => 'restart', 
-	       'amavisd' => 'restart'
+	       'amavisd' => 'restart',
+           'opendkim' => 'restart'
     );
 
 #
@@ -73,12 +78,16 @@ my @domainTemplates = qw(
     /etc/postfix/master.cf
     /etc/postfix/transport
     /etc/amavisd/amavisd.conf
+    /etc/opendkim.conf
+    /etc/opendkim/TrustedHosts
+    /etc/opendkim/KeyTable
+    /etc/opendkim/SigningTable
 );
 
 foreach (qw(create modify delete)) {
     event_templates('domain-' . $_, @domainTemplates);
-    event_actions('domain-'   . $_, 'nethserver-mail-postmap-update' => '30');
-    event_services('domain-'  . $_, 'postfix' => 'restart', 'amavisd' => 'restart');
+    event_actions('domain-'   . $_, 'nethserver-mail-postmap-update' => '30', 'nethserver-mail-common-openDkim-Key-Creation' => '40');
+    event_services('domain-'  . $_, 'postfix' => 'restart', 'amavisd' => 'restart','opendkim' => 'restart');
 }
 
 #
@@ -90,12 +99,23 @@ event_actions('migration-import', qw(
 
 
 #
+# reload opendkim trusted host on event host-*
+#
+foreach (qw(create modify delete)) {
+    event_templates('host-' . $_, '/etc/opendkim/TrustedHosts');
+    event_services('host-'  . $_, 'opendkim' => 'restart');
+}
+
+
+#
 # trusted-networks-modify event
 #
 event_templates('trusted-networks-modify', qw(
     /etc/postfix/mynetworks.cidr
+    /etc/opendkim/TrustedHosts
 ));
 event_services('trusted-networks-modify', qw(
     postfix reload
     amavisd reload
+    opendkim restart
 ));

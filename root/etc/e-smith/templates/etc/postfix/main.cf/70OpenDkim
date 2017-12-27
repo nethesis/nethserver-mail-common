@@ -1,0 +1,8 @@
+#
+#Milter of opendkim
+#
+milter_default_action = accept
+smtpd_milters = inet:127.0.0.1:8891
+
+
+

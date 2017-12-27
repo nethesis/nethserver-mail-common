@@ -1,0 +1,32 @@
+# OPENDKIM TRUSTED HOSTS
+# To use this file, uncomment the #ExternalIgnoreList and/or the #InternalHosts
+# option in /etc/opendkim.conf then restart OpenDKIM. Additional hosts
+# may be added on separate lines (IP addresses, hostnames, or CIDR ranges).
+# The localhost IP (127.0.0.1) should always be the first entry in this file.
+127.0.0.1
+::1
+{
+    use esmith::HostsDB;
+    use esmith::NetworksDB;
+    my $hdb = esmith::HostsDB->open_ro() || return;
+    my $ndb = esmith::NetworksDB->open_ro() || return;
+
+    push @hostnames, ${DomainName};
+    push @hostnames, ${SystemName}.'.'.${DomainName};
+    push @hostnames, map { $_->key } $hdb->get_all_by_prop('type', 'self');
+
+    foreach my $host (@hostnames){
+    $OUT .= "$host\n"
+    }
+
+
+    #return a cidr for localnetwork
+    foreach (map {
+        my ($addr, $mask) = split('/', $_);
+        esmith::util::computeLocalNetworkShortSpec($addr, $mask || '255.255.255.255');
+        } $ndb->local_access_spec() ) {
+
+        $OUT .= sprintf("%s ", $_)."\n" unless ($_ =~ m/127.0.0.1/);
+    }
+
+}
