@@ -35,6 +35,8 @@ class Modify extends \Nethgui\Controller\Table\Modify
 {
     const DISCLAIMER_MAX_LENGTH = 2048;
     const DISCLAIMER_PATH = '/var/lib/nethserver/mail-disclaimers/';
+    const DKIM_PATH = '/etc/opendkim/keys/';
+    const DKIM_MAX_LENGTH = 2048;
 
     public function initialize()
     {
@@ -43,15 +45,20 @@ class Modify extends \Nethgui\Controller\Table\Modify
             array('Description', Validate::ANYTHING, Table::FIELD),
             array('TransportType', Validate::ANYTHING, Table::FIELD),
             array('DisclaimerStatus', Validate::SERVICESTATUS, Table::FIELD),
+            array('openDkim', Validate::SERVICESTATUS, Table::FIELD),
         );
 
         $this->declareParameter('DisclaimerText', $this->createValidator()->maxLength(self::DISCLAIMER_MAX_LENGTH), $this->getPlatform()->getMapAdapter(
                 array($this, 'readDisclaimerFile'), array($this, 'writeDisclaimerFile'), array()
             ));
 
+        $this->declareParameter('DkimTxt', $this->createValidator()->maxLength(self::DKIM_MAX_LENGTH),$this->getPlatform()->getMapAdapter(
+                array($this, 'readDkimFile'),  array()
+            ));
+
         $this->setSchema($parameterSchema);
         $this->setDefaultValue('TransportType', 'Relay');
-
+        $this->setDefaultValue('openDkim', 'disabled');
         parent::initialize();
     }
 
@@ -62,6 +69,21 @@ class Modify extends \Nethgui\Controller\Table\Modify
         if($this->getRequest()->isMutation() && $primaryDomain === $this->parameters['domain'] && $this->parameters['TransportType'] === 'Relay') {
             $report->addValidationErrorMessage($this, 'domain', 'valid_relay_notprimarydomain');
         }
+    }
+
+    public function readDkimFile()
+    {
+        if ( ! isset($this->parameters['domain'])) {
+            return '';
+        }
+        $fileName =  self::DKIM_PATH . $this->parameters['domain'] . '.txt';
+        $value = $this->getPhpWrapper()->file_get_contents($fileName, FALSE, NULL, -1, self::DKIM_MAX_LENGTH);
+
+        if ($value === FALSE) {
+            $value = '';
+        }
+
+        return $value;
     }
 
     public function readDisclaimerFile()

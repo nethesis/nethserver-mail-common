@@ -42,6 +42,9 @@ echo $view->fieldsetSwitch('DisclaimerStatus', 'enabled', $view::FIELDSETSWITCH_
     ->setAttribute('uncheckedValue', 'disabled')
     ->insert($view->textArea('DisclaimerText', $view::LABEL_NONE)->setAttribute('dimensions', '10x40'));
 
+echo $view->fieldsetSwitch('openDkim', 'enabled', $view::FIELDSETSWITCH_EXPANDABLE | $view::FIELDSETSWITCH_CHECKBOX)
+    ->setAttribute('uncheckedValue', 'disabled')
+    ->insert($view->textArea('DkimTxt', $view::LABEL_ABOVE|$view::STATE_READONLY)->setAttribute('dimensions', '10x70'));
 
 echo $view->buttonList($view::BUTTON_SUBMIT | $view::BUTTON_HELP | $view::BUTTON_CANCEL);
 
