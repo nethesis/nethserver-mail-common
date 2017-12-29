@@ -40,7 +40,7 @@ class OpenDkim extends \Nethgui\Controller\Table\AbstractAction
 
     protected function onParametersSaved($changedParameters)
     {
-        $this->getPlatform()->signalEvent('nethserver-mail-common-save');
+        $this->getPlatform()->signalEvent('nethserver-mail-common-update');
     }
 
     public static function splitLines($text)
