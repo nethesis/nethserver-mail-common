@@ -18,7 +18,7 @@ foreach my $domain (@domains) {
 
 #chmod and chown to allow the server-manager to read the txt file
 system ('/usr/bin/chmod 640 /etc/opendkim/keys/*.txt') == '0'||
-    ¦   ¦   die "the /etc/opendkim/keys/*.txt cannot be chmod 640 : $?";
+        die "the /etc/opendkim/keys/*.txt cannot be chmod 640 : $?";
 
 system ('/usr/bin/chown -R opendkim:adm /etc/opendkim/keys/') == '0'||
-    ¦   ¦   die "the folder /etc/opendkim/keys cannot be chown to opendkim:adm: $?";
+        die "the folder /etc/opendkim/keys cannot be chown to opendkim:adm: $?";
