@@ -67,7 +67,7 @@ event_actions('nethserver-mail-common-save',
 
 event_services('nethserver-mail-common-save',
 	       'postfix' => 'reload',
-    ¦   ¦  'opendkim' => 'reload'
+            'opendkim' => 'reload'
     );
 
 #
