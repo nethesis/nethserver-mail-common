@@ -5,3 +5,4 @@ $L['openDkimRestrictedIpList_label'] = 'List of IP/CIDR (local network are allow
 $L['Not an IP'] = '${0} is not an IP or a network CIDR (192.168.1.0/24)';
 $L['status_label'] = 'Enable the service';
 $L['Opendkim_Configure_header'] = 'Opendkim settings';
+$L['openDkimRestrictedIp_label'] = 'List of IP and CIDR';

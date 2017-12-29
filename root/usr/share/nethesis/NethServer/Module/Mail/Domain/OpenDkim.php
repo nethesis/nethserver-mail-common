@@ -66,7 +66,7 @@ class OpenDkim extends \Nethgui\Controller\Table\AbstractAction
 
         foreach (self::splitLines($this->parameters['openDkimRestrictedIpList']) as $v) {
             if ( ! $itemValidator->evaluate($v)) {
-                $report->addValidationErrorMessage($this, 'openDkimRestrictedIpList', 'Not an IP', array($v));
+                $report->addValidationErrorMessage($this, 'openDkimRestrictedIp', 'Not an IP', array($v));
                 break;
             }
         }
