@@ -22,8 +22,6 @@
 # then .domain, then user@*, and finally *. See the opendkim.conf(5) man page under
 # "SigningTable" for more details.
 
-#example.com default._domainkey.example.com
-
 {
     use esmith::DomainsDB;
     my $domainsDb = esmith::DomainsDB->open_ro();
