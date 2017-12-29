@@ -44,12 +44,7 @@ echo $view->fieldsetSwitch('DisclaimerStatus', 'enabled', $view::FIELDSETSWITCH_
 
 echo $view->fieldsetSwitch('openDkim', 'enabled', $view::FIELDSETSWITCH_EXPANDABLE | $view::FIELDSETSWITCH_CHECKBOX)
     ->setAttribute('uncheckedValue', 'disabled')
-    ->insert($view->textArea('DkimTxt', $view::LABEL_ABOVE|$view::STATE_READONLY)->setAttribute('dimensions', '10x80'))
-
-    ->insert($view->radioButton('openDkimNoRestrictedHosts', 'enabled'))
-    ->insert($view->fieldsetSwitch('openDkimNoRestrictedHosts', 'disabled', $view::FIELDSETSWITCH_EXPANDABLE)
-    ->insert($view->textArea('openDkimRestrictedIpList', $view::LABEL_ABOVE)->setAttribute('dimensions', '10x30')))
-;
+    ->insert($view->textArea('DkimKey', $view::LABEL_ABOVE|$view::STATE_READONLY)->setAttribute('dimensions', '10x80'));
 
 echo $view->buttonList($view::BUTTON_SUBMIT | $view::BUTTON_HELP | $view::BUTTON_CANCEL);
 

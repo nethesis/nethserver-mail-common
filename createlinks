@@ -66,8 +66,9 @@ event_actions('nethserver-mail-common-save',
 	      'nethserver-mail-postmap-update' => '20');
 
 event_services('nethserver-mail-common-save',
-	       'postfix' => 'reload');
-
+	       'postfix' => 'reload',
+    ¦   ¦  'opendkim' => 'reload'
+    );
 
 #
 # domain events
