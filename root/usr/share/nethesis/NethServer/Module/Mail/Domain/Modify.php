@@ -46,6 +46,8 @@ class Modify extends \Nethgui\Controller\Table\Modify
             array('TransportType', Validate::ANYTHING, Table::FIELD),
             array('DisclaimerStatus', Validate::SERVICESTATUS, Table::FIELD),
             array('openDkim', Validate::SERVICESTATUS, Table::FIELD),
+            array('openDkimNoRestrictedHosts', Validate::SERVICESTATUS, Table::FIELD),
+            array('openDkimRestrictedIpList', Validate::ANYTHING, Table::FIELD),
         );
 
         $this->declareParameter('DisclaimerText', $this->createValidator()->maxLength(self::DISCLAIMER_MAX_LENGTH), $this->getPlatform()->getMapAdapter(
@@ -59,7 +61,23 @@ class Modify extends \Nethgui\Controller\Table\Modify
         $this->setSchema($parameterSchema);
         $this->setDefaultValue('TransportType', 'Relay');
         $this->setDefaultValue('openDkim', 'disabled');
+        $this->setDefaultValue('openDkimNoRestrictedHosts', 'disabled');
         parent::initialize();
+    }
+
+        public static function splitLines($text)
+    {
+        return array_filter(preg_split("/[,;\s]+/", $text));
+    }
+
+    public function readopenDkimRestrictedIPList($dbList)
+    {
+        return implode("\r\n", explode(',' ,$dbList));
+    }
+
+    public function writeopenDkimRestrictedIpList($viewText)
+    {
+        return array(implode(',', self::splitLines($viewText)));
     }
 
     public function validate(\Nethgui\Controller\ValidationReportInterface $report)
@@ -68,6 +86,16 @@ class Modify extends \Nethgui\Controller\Table\Modify
         $primaryDomain = explode('.', gethostname(), 2)[1];
         if($this->getRequest()->isMutation() && $primaryDomain === $this->parameters['domain'] && $this->parameters['TransportType'] === 'Relay') {
             $report->addValidationErrorMessage($this, 'domain', 'valid_relay_notprimarydomain');
+        }
+
+        $itemValidator = $this->createValidator()->orValidator($this->createValidator(Validate::IP),
+            $this->createValidator(Validate::CIDR_BLOCK));
+
+        foreach (self::splitLines($this->parameters['openDkimRestrictedIpList']) as $v) {
+            if ( ! $itemValidator->evaluate($v)) {
+                $report->addValidationErrorMessage($this, 'openDkimRestrictedIpList', 'Not an IP', array($v));
+                break;
+            }
         }
     }
 
