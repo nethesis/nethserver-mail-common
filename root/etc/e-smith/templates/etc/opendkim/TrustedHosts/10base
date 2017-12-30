@@ -33,5 +33,5 @@
         push @hostnames,join("\n",split(',', ($opendkim{openDkimRestrictedIpList} || '')));
     }
     #go we write the template
-    $OUT .= join("\n",@hostnames) ."\n";
+    $OUT .= join("\n",@hostnames);
 }
