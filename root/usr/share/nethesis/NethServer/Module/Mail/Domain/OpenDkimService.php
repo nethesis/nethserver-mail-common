@@ -28,7 +28,7 @@ use Nethgui\System\PlatformInterface as Validate;
  * @author stephane de Labrusse <stephdl@de-labrusse.fr>
  * @since 1.0
  */
-class OpenDkim extends \Nethgui\Controller\Table\AbstractAction
+class OpenDkimService extends \Nethgui\Controller\Table\AbstractAction
 {
 
     public function initialize()

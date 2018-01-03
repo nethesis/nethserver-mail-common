@@ -29,7 +29,7 @@
 
     foreach my $domain (@domains) {
         $domainName = $domain->key;
-        $dkim =  $domain->prop('openDkim') || 'disabled';
+        $dkim =  $domain->prop('OpenDkim') || 'disabled';
         next unless ($dkim eq 'enabled');
         $OUT .= "*\@$domainName default._domainkey.$domainName\n";
     }
