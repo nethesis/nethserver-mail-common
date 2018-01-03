@@ -7,7 +7,7 @@
 
 milter_default_action = {$postfix{milterAction} || 'accept'}
 
-# we look after 'smtpdMilter' property in a key with a service type
+# we look after 'SmtpdMilter' property in a key with a service type
 # add your milter configuration inside like this
 # for a unix socket
 #'unix:/var/lib/rspamd/milter.sock'
@@ -22,12 +22,12 @@ my @services = map { $_->key } $confDb->get_all_by_prop('type' => 'service');
 my @milters;
 
 foreach (@services) {
-    next if ( ! -e "/etc/e-smith/db/configuration/defaults/$_/smtpdMilter" );
+    next if ( ! -e "/etc/e-smith/db/configuration/defaults/$_/SmtpdMilter" );
 
     my $status = $confDb->get_prop("$_",'status') || 'disabled';
     next if ($status eq 'disabled');
 
-    my $milter = $confDb->get_prop("$_",'smtpdMilter');
+    my $milter = $confDb->get_prop("$_",'SmtpdMilter');
     chomp $milter;
 
     push @milters, $milter;
