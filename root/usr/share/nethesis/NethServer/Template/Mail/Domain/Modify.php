@@ -38,11 +38,6 @@ $jsPrimaryDomain = json_encode(explode('.', gethostname(), 2)[1]);
 
 echo $transportPanel;
 
-echo $view->fieldsetSwitch('DisclaimerStatus', 'enabled', $view::FIELDSETSWITCH_EXPANDABLE | $view::FIELDSETSWITCH_CHECKBOX)
-    ->setAttribute('uncheckedValue', 'disabled')
-    ->insert($view->textArea('DisclaimerText', $view::LABEL_NONE)->setAttribute('dimensions', '10x40'));
-
-
 echo $view->buttonList($view::BUTTON_SUBMIT | $view::BUTTON_HELP | $view::BUTTON_CANCEL);
 
 $view->includeJavascript("
