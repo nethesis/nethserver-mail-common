@@ -9,7 +9,7 @@ BuildArch: noarch
 
 Provides: nethserver-mail-disclaimer = 0.0.0
 Requires: nethserver-mail-smarthost
-Requires: amavisd-new, perl-Convert-BinHex, tmpwatch
+Requires: perl-Convert-BinHex, tmpwatch
 
 BuildRequires: nethserver-devtools
 
