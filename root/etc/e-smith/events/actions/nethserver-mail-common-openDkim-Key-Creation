@@ -7,8 +7,7 @@ my @domains =  $domainsDb->domains();
 
 foreach my $domain (@domains) {
     my $domainName = $domain->key;
-    my $dkim =  $domain->prop('OpenDkim') || 'disabled';
-    next unless ($dkim eq 'enabled');
+    #verify if keys exist
     next if (-f "/etc/opendkim/keys/$domainName.private");
     next if (-f "/etc/opendkim/keys/$domainName.txt");
 
