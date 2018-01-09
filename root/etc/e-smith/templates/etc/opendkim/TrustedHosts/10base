@@ -14,24 +14,13 @@
     my @hostnames;
     push @hostnames, ${DomainName};
     push @hostnames, ${SystemName}.'.'.${DomainName};
+
     # push all host name to array
     push @hostnames, map { $_->key } $hdb->get_all_by_prop('type', 'self');
-    #allow all hosts if enabled
-    push @hostnames, "0.0.0.0/0" if (($opendkim{'openDkimNoRestrictedHosts'} ||'enabled') eq 'enabled');
 
-    #if all hosts are disabled -> restricted List
-    if (($opendkim{'openDkimNoRestrictedHosts'}|| 'enabled') eq 'disabled') {
-        #return a cidr for localnetwork
-        foreach (map {
-            my ($addr, $mask) = split('/', $_);
-            esmith::util::computeLocalNetworkShortSpec($addr, $mask || '255.255.255.255');
-            } $ndb->local_access_spec() ) {
-            #push all green cidr to array
-            push @hostnames, sprintf("%s ", $_) unless ($_ =~ m/127.0.0.1/);
-        }
-        #push IP/CIDR list if exists
-        push @hostnames,join("\n",split(',', ($opendkim{openDkimRestrictedIpList} || '')));
-    }
+    #allow all hosts
+    push @hostnames, "0.0.0.0/0";
+
     #go we write the template
     $OUT .= join("\n",@hostnames);
 }
