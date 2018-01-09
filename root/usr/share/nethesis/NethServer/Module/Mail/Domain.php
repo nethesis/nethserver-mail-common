@@ -44,7 +44,6 @@ class Domain extends \Nethgui\Controller\TableController
             ->addRowAction(new \NethServer\Module\Mail\Domain\Modify('delete'))
             ->addTableActionPluggable(new \NethServer\Module\Mail\Domain\Modify('create'), 'PlugTransport')
             ->addTableAction(new \Nethgui\Controller\Table\Help('Help'))
-            ->addTableAction(new \NethServer\Module\Mail\Domain\OpenDkimService())
         ;
                 
         parent::initialize();
