@@ -5,22 +5,4 @@
 # The localhost IP (127.0.0.1) should always be the first entry in this file.
 127.0.0.1
 ::1
-{
-    use esmith::HostsDB;
-    use esmith::NetworksDB;
-    my $hdb = esmith::HostsDB->open_ro() || return;
-    my $ndb = esmith::NetworksDB->open_ro() || return;
-
-    my @hostnames;
-    push @hostnames, ${DomainName};
-    push @hostnames, ${SystemName}.'.'.${DomainName};
-
-    # push all host name to array
-    push @hostnames, map { $_->key } $hdb->get_all_by_prop('type', 'self');
-
-    #allow all hosts
-    push @hostnames, "0.0.0.0/0";
-
-    #go we write the template
-    $OUT .= join("\n",@hostnames);
-}
+0.0.0.0/0
