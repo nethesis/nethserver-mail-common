@@ -35,8 +35,6 @@ class Modify extends \Nethgui\Controller\Table\Modify
 {
     const DISCLAIMER_MAX_LENGTH = 2048;
     const DISCLAIMER_PATH = '/var/lib/nethserver/mail-disclaimers/';
-    const DKIM_PATH = '/etc/opendkim/keys/';
-    const DKIM_MAX_LENGTH = 2048;
 
     public function initialize()
     {
@@ -52,7 +50,7 @@ class Modify extends \Nethgui\Controller\Table\Modify
                 array($this, 'readDisclaimerFile'), array($this, 'writeDisclaimerFile'), array()
             ));
 
-        $this->declareParameter('DkimKey', $this->createValidator()->maxLength(self::DKIM_MAX_LENGTH),$this->getPlatform()->getMapAdapter(
+        $this->declareParameter('DkimKey', $this->createValidator()->maxLength(10000),$this->getPlatform()->getMapAdapter(
                 array($this, 'readDkimFile')
             ));
 
@@ -76,8 +74,8 @@ class Modify extends \Nethgui\Controller\Table\Modify
         if ( ! isset($this->parameters['domain'])) {
             return '';
         }
-        $fileName =  self::DKIM_PATH . $this->parameters['domain'] . '.txt';
-        $value = $this->getPhpWrapper()->file_get_contents($fileName, FALSE, NULL, -1, self::DKIM_MAX_LENGTH);
+        $fileName =  '/etc/opendkim/keys/' . $this->parameters['domain'] . '.txt';
+        $value = $this->getPhpWrapper()->file_get_contents($fileName, FALSE, NULL, -1);
 
         if ($value === FALSE) {
             $value = '';
