@@ -1,7 +1,0 @@
-{
-#Milter used by opendkim
-push @smtpd_milters, 'inet:127.0.0.1:8891' if $opendkim{'status'} eq 'enabled';
-
-'';
-}
-
