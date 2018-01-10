@@ -12,6 +12,6 @@ $L['TransportType_Relay_label'] = 'Relay to another server';
 $L['Update domain `${0}`'] = 'Update domain `${0}`'; 
 $L['domain_label'] = 'Domain';
 $L['valid_relay_notprimarydomain'] = 'The local mailbox domain cannot be relayed';
-$L['OpenDkim_label'] = 'Sign outbound messages with DomainKeys Identified Mail (DKIM)';
+$L['OpenDkimStatus_label'] = 'Sign outbound messages with DomainKeys Identified Mail (DKIM)';
 $L['DkimKey_label'] = 'Add a TXT record to your external DNS provider with the  selector default._domainkey and the key ("v=DKIM1; k=rsa; p=..;")';
 $L['DkimKeyNotCreated_label'] = 'The DKIM key will be generated when the domain record will be created';

@@ -8,14 +8,14 @@ if ($view->getModule()->getIdentifier() == 'update') {
     $headerText = $T('Update domain `${0}`');
     $messagesText = $T('Messages to domain ${0}');
     $keyStyles = $view::STATE_READONLY;
-    $dkim = $view->fieldsetSwitch('OpenDkim', 'enabled', $view::FIELDSETSWITCH_EXPANDABLE | $view::FIELDSETSWITCH_CHECKBOX)
+    $dkim = $view->fieldsetSwitch('OpenDkimStatus', 'enabled', $view::FIELDSETSWITCH_EXPANDABLE | $view::FIELDSETSWITCH_CHECKBOX)
     ->setAttribute('uncheckedValue', 'disabled')
     ->insert($view->textArea('DkimKey', $view::LABEL_ABOVE|$view::STATE_READONLY)->setAttribute('dimensions', '10x80'));
 } else {
     $headerText = $T('Create a new domain');
     $messagesText = $T('Messages to this domain');
     $keyStyles = 0;
-    $dkim = $view->fieldsetSwitch('OpenDkim', 'enabled', $view::FIELDSETSWITCH_EXPANDABLE | $view::FIELDSETSWITCH_CHECKBOX)
+    $dkim = $view->fieldsetSwitch('OpenDkimStatus', 'enabled', $view::FIELDSETSWITCH_EXPANDABLE | $view::FIELDSETSWITCH_CHECKBOX)
     ->setAttribute('uncheckedValue', 'disabled')
     ->insert($view->literal($T('DkimKeyNotCreated_label')));
 }

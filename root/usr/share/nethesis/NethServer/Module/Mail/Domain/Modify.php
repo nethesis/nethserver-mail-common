@@ -43,7 +43,7 @@ class Modify extends \Nethgui\Controller\Table\Modify
             array('Description', Validate::ANYTHING, Table::FIELD),
             array('TransportType', Validate::ANYTHING, Table::FIELD),
             array('DisclaimerStatus', Validate::SERVICESTATUS, Table::FIELD),
-            array('OpenDkim', Validate::SERVICESTATUS, Table::FIELD),
+            array('OpenDkimStatus', Validate::SERVICESTATUS, Table::FIELD),
         );
 
         $this->declareParameter('DisclaimerText', $this->createValidator()->maxLength(self::DISCLAIMER_MAX_LENGTH), $this->getPlatform()->getMapAdapter(
@@ -56,7 +56,7 @@ class Modify extends \Nethgui\Controller\Table\Modify
 
         $this->setSchema($parameterSchema);
         $this->setDefaultValue('TransportType', 'Relay');
-        $this->setDefaultValue('OpenDkim', 'disabled');
+        $this->setDefaultValue('OpenDkimStatus', 'disabled');
         parent::initialize();
     }
 
