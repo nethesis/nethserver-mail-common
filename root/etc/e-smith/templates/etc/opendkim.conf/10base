@@ -66,12 +66,12 @@ Umask	002
 ##  Specifies whether or not the filter should generate report mail back
 ##  to senders when verification fails and an address for such a purpose
 ##  is provided. See opendkim.conf(5) for details.
-SendReports	yes
+#SendReports	yes
 
 ##  Specifies the sending address to be used on From: headers of outgoing
 ##  failure reports.  By default, the e-mail address of the user executing
 ##  the filter is used (executing_user@hostname).
-ReportAddress	"{$DomainName} Postmaster" <postmaster@{$DomainName}>
+#ReportAddress	"{$DomainName} Postmaster" <postmaster@{$DomainName}>
 
 ##  Add a DKIM-Filter header field to messages passing through this filter
 ##  to identify messages it has processed.
@@ -131,5 +131,5 @@ OversignHeaders	From
 ##  policies retrieved from DNS, rather than relying on the nameserver for
 ##  caching service. Useful if the nameserver being used by the filter is
 ##  not local.
-QueryCache	yes
+#QueryCache	yes
 
