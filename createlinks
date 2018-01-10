@@ -101,23 +101,12 @@ event_actions('migration-import', qw(
 
 
 #
-# reload opendkim trusted host on event host-*
-#
-foreach (qw(create modify delete)) {
-    event_templates('host-' . $_, '/etc/opendkim/TrustedHosts');
-    event_services('host-'  . $_, 'opendkim' => 'restart');
-}
-
-
-#
 # trusted-networks-modify event
 #
 event_templates('trusted-networks-modify', qw(
     /etc/postfix/mynetworks.cidr
-    /etc/opendkim/TrustedHosts
 ));
 event_services('trusted-networks-modify', qw(
     postfix reload
     amavisd reload
-    opendkim restart
 ));
