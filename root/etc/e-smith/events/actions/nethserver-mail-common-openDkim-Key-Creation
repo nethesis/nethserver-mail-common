@@ -1,5 +1,6 @@
 #!/usr/bin/perl -w
 use strict;
+use File::Copy;
 
 use esmith::DomainsDB;
 my $domainsDb = esmith::DomainsDB->open_ro();
@@ -7,6 +8,9 @@ my @domains =  $domainsDb->domains();
 
 foreach my $domain (@domains) {
     my $domainName = $domain->key;
+    #cp to a world readable place
+    copy("/etc/opendkim/keys/$domainName.txt",'/etc/opendkim/') 
+        or die "cannot copy the key $domainName.txt : $?";
     #verify if keys exist
     next if (-f "/etc/opendkim/keys/$domainName.private");
     next if (-f "/etc/opendkim/keys/$domainName.txt");
@@ -14,10 +18,3 @@ foreach my $domain (@domains) {
     system ("/usr/sbin/opendkim-genkey -b 2048 -D /etc/opendkim/keys/ -d $domainName -s $domainName") == '0'||
             die "Opendkim cannot create keys for $domainName: $?";
 }
-
-#chmod and chown to allow the server-manager to read the txt file
-system ('/usr/bin/chmod 640 /etc/opendkim/keys/*.txt') == '0'||
-        die "the /etc/opendkim/keys/*.txt cannot be chmod 640 : $?";
-
-system ('/usr/bin/chown -R opendkim:adm /etc/opendkim/keys/') == '0'||
-        die "the folder /etc/opendkim/keys cannot be chown to opendkim:adm: $?";
