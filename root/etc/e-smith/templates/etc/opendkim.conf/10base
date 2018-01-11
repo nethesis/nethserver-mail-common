@@ -50,14 +50,14 @@ SyslogSuccess	yes
 LogWhy	yes
 
 ##  Attempt to become the specified user before starting operations.
-UserID	opendkim:opendkim
+#UserID	opendkim:opendkim
 
 ##  Create a socket through which your MTA can communicate.
-Socket	inet:8891@localhost
+Socket	unix:/var/run/opendkim/milter
 
 ##  Required to use local socket with MTAs that access the socket as a non-
 ##  privileged user (e.g. Postfix)
-Umask	002
+Umask	007
 
 ##  This specifies a text file in which to store DKIM transaction statistics.
 ##  OpenDKIM must be manually compiled with --enable-stats to enable this feature.
