@@ -80,6 +80,11 @@ class Modify extends \Nethgui\Controller\Table\Modify
         if ($value === FALSE) {
             $value = '';
         }
+        else {
+            //clean and join key fragments
+            preg_match_all('/"([^"]+)"/', $value, $matches);
+            $value = implode ($matches[1]);
+        }
 
         return $value;
     }
