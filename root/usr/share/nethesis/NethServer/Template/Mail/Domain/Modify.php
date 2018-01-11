@@ -10,9 +10,8 @@ if ($view->getModule()->getIdentifier() == 'update') {
     $keyStyles = $view::STATE_READONLY;
     $dkim = $view->fieldsetSwitch('OpenDkimStatus', 'enabled', $view::FIELDSETSWITCH_EXPANDABLE | $view::FIELDSETSWITCH_CHECKBOX)
     ->setAttribute('uncheckedValue', 'disabled')
-    ->insert($view->literal($T('DkimDNSTips_label').'<br />'))
-    ->insert($view->literal($T('DkimSelector_label').' : "default._domainkey"<br />'));
-    ->insert($view->literal($T('DkimTXT_label').' : "TXT"<br />'));
+    ->insert($view->literal($T('DkimDNSTips_label').'<br /><br />'))
+    ->insert($view->literal($T('DkimSelector_label').' : "default._domainkey"<br /><br />'))
     ->insert($view->textArea('DkimKey', $view::LABEL_ABOVE|$view::STATE_READONLY)->setAttribute('dimensions', '10x80'));
 } else {
     $headerText = $T('Create a new domain');
