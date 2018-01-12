@@ -74,7 +74,7 @@ class Modify extends \Nethgui\Controller\Table\Modify
         if ( ! isset($this->parameters['domain'])) {
             return '';
         }
-        $fileName =  '/etc/opendkim/' . $this->parameters['domain'] . '.txt';
+        $fileName =  '/etc/opendkim/default.txt';
         $value = $this->getPhpWrapper()->file_get_contents($fileName, FALSE, NULL, -1);
 
         if ($value === FALSE) {

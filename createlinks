@@ -49,7 +49,7 @@ event_actions('nethserver-mail-common-update',
 	      'initialize-default-databases' => '00',
 	      'nethserver-mail-common-conf' => '20',
 	      'nethserver-mail-postmap-update' => '30',
-          'nethserver-mail-common-openDkim-Key-Creation' => '40');
+          'nethserver-mail-common-opendkim-key-creation' => '40');
 
 event_services('nethserver-mail-common-update',
 	       'postfix' => 'restart', 
@@ -88,7 +88,7 @@ my @domainTemplates = qw(
 
 foreach (qw(create modify delete)) {
     event_templates('domain-' . $_, @domainTemplates);
-    event_actions('domain-'   . $_, 'nethserver-mail-postmap-update' => '30', 'nethserver-mail-common-openDkim-Key-Creation' => '40');
+    event_actions('domain-'   . $_, 'nethserver-mail-postmap-update' => '30', 'nethserver-mail-common-opendkim-key-creation' => '40');
     event_services('domain-'  . $_, 'postfix' => 'restart', 'amavisd' => 'restart','opendkim' => 'restart');
 }
 
