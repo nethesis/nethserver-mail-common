@@ -5,21 +5,27 @@ use File::Copy;
 
 my $db = esmith::ConfigDB->open_ro() or die("Could not open ConfigDB");
 my $domainName = $db->get_value('DomainName') ||
-    die "Opendkim cannot determine host's domain name, so skipping default key generation' : $?";
+    die "Opendkim cannot determine host's domain name: $?";
 
 if ((! -f "/etc/opendkim/keys/default.private") || (! -f "/etc/opendkim/keys/default.txt")) {
     system ("/usr/sbin/opendkim-genkey -b 2048 -D /etc/opendkim/keys/ -d $domainName") == '0'||
     die "Opendkim cannot create correctly  keys: $?";
 }
 
-system ("/usr/bin/chown -R opendkim:opendkim /etc/opendkim/keys") == '0'||
-    die "Opendkim cannot chown correctly keys: $?";
+my ($login,$pass,$uid,$gid) = getpwnam('opendkim')
+    or die "opendkim not in passwd file";
 
-system ("/usr/bin/chmod 440 /etc/opendkim/keys/default.private") == '0'||
+foreach my $file ( glob('/etc/opendkim/keys/*')) {
+    chown $uid, $gid, $file ||
+        die "Opendkim cannot chown correctly $file keys: $?";
+}
+
+chmod 0440, "/etc/opendkim/keys/default.private" ||
     die "Opendkim cannot chmod correctly private keys: $?";
 
-system ("/usr/bin/chmod 444 /etc/opendkim/keys/default.txt") == '0'||
+chmod 0444, "/etc/opendkim/keys/default.txt" ||
     die "Opendkim cannot chmod correctly public keys: $?";
 
 #cp to a world readable place
-copy('/etc/opendkim/keys/default.txt','/etc/opendkim/') or die "cannot copy the public key default.txt : $?";
+copy('/etc/opendkim/keys/default.txt','/etc/opendkim/') ||
+    die "cannot copy the public key default.txt : $?";
