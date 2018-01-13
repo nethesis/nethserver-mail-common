@@ -3,16 +3,14 @@ use strict;
 use esmith::ConfigDB;
 use File::Copy;
 
-if ((-f "/etc/opendkim/keys/default.private") || (-f "/etc/opendkim/keys/default.txt")) {
-    exit 0;
-}
-
 my $db = esmith::ConfigDB->open_ro() or die("Could not open ConfigDB");
 my $domainName = $db->get_value('DomainName') ||
     die "Opendkim cannot determine host's domain name, so skipping default key generation' : $?";
 
-system ("/usr/sbin/opendkim-genkey -b 2048 -D /etc/opendkim/keys/ -d $domainName") == '0'||
+if ((! -f "/etc/opendkim/keys/default.private") || (! -f "/etc/opendkim/keys/default.txt")) {
+    system ("/usr/sbin/opendkim-genkey -b 2048 -D /etc/opendkim/keys/ -d $domainName") == '0'||
     die "Opendkim cannot create correctly  keys: $?";
+}
 
 system ("/usr/bin/chown -R opendkim:opendkim /etc/opendkim/keys") == '0'||
     die "Opendkim cannot chown correctly keys: $?";
