@@ -3,4 +3,15 @@
 # then uncomment the following line and replace example.com with your domain
 # name, then restart OpenDKIM. Additional keys may be added on separate lines.
 
-default._domainkey.{$DomainName} %:default:/etc/opendkim/keys/default.private
+{
+    use esmith::DomainsDB;
+    my $domainsDb = esmith::DomainsDB->open_ro();
+    my @domains =  $domainsDb->domains();
+
+    foreach my $domain (@domains) {
+        $domainName = $domain->key;
+        $dkim =  $domain->prop('OpenDkimStatus') || 'disabled';
+        next unless ($dkim eq 'enabled');
+        $OUT .= "default._domainkey.$domainName $domainName:default:/etc/opendkim/keys/default.private\n";
+   }
+}
