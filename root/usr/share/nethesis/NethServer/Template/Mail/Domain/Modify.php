@@ -8,18 +8,10 @@ if ($view->getModule()->getIdentifier() == 'update') {
     $headerText = $T('Update domain `${0}`');
     $messagesText = $T('Messages to domain ${0}');
     $keyStyles = $view::STATE_READONLY;
-    $dkim = $view->fieldsetSwitch('OpenDkimStatus', 'enabled', $view::FIELDSETSWITCH_EXPANDABLE | $view::FIELDSETSWITCH_CHECKBOX)
-    ->setAttribute('uncheckedValue', 'disabled')
-    ->insert($view->literal($T('DkimDNSTips_label').'<br /><br />'))
-    ->insert($view->literal($T('DkimSelector_label').' : "default._domainkey"<br /><br />'))
-    ->insert($view->textArea('DkimKey', $view::LABEL_ABOVE|$view::STATE_READONLY)->setAttribute('dimensions', '10x80'));
 } else {
     $headerText = $T('Create a new domain');
     $messagesText = $T('Messages to this domain');
     $keyStyles = 0;
-    $dkim = $view->fieldsetSwitch('OpenDkimStatus', 'enabled', $view::FIELDSETSWITCH_EXPANDABLE | $view::FIELDSETSWITCH_CHECKBOX)
-    ->setAttribute('uncheckedValue', 'disabled')
-    ->insert($view->literal($T('DkimKeyNotCreated_label')));
 }
 
 echo $view->header('domain')->setAttribute('template', $headerText);
@@ -50,7 +42,11 @@ echo $view->fieldsetSwitch('DisclaimerStatus', 'enabled', $view::FIELDSETSWITCH_
     ->setAttribute('uncheckedValue', 'disabled')
     ->insert($view->textArea('DisclaimerText', $view::LABEL_NONE)->setAttribute('dimensions', '10x40'));
 
-echo $dkim;
+echo $view->fieldsetSwitch('OpenDkimStatus', 'enabled', $view::FIELDSETSWITCH_EXPANDABLE | $view::FIELDSETSWITCH_CHECKBOX)
+    ->setAttribute('uncheckedValue', 'disabled')
+    ->insert($view->literal($T('DkimDNSTips_label').'<br /><br />'))
+    ->insert($view->literal($T('DkimSelector_label').' : "default._domainkey"<br /><br />'))
+    ->insert($view->textArea('DkimKey', $view::LABEL_ABOVE|$view::STATE_READONLY)->setAttribute('dimensions', '10x80'));
 
 echo $view->buttonList($view::BUTTON_SUBMIT | $view::BUTTON_HELP | $view::BUTTON_CANCEL);
 
