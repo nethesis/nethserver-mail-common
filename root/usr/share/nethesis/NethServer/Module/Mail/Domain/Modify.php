@@ -51,7 +51,7 @@ class Modify extends \Nethgui\Controller\Table\Modify
             ));
 
         $this->declareParameter('DkimKey', $this->createValidator()->maxLength(10000),$this->getPlatform()->getMapAdapter(
-                array($this, 'readDkimFile')
+                array($this, 'readDkimFile'), NULL, array()
             ));
 
         $this->setSchema($parameterSchema);
