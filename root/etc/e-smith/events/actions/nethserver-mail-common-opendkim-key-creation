@@ -16,16 +16,16 @@ my ($login,$pass,$uid,$gid) = getpwnam('opendkim')
     or die "opendkim not in passwd file";
 
 foreach my $file ( glob('/etc/opendkim/keys/*')) {
-    chown $uid, $gid, $file ||
+    chown $uid, $gid, $file or
         die "Opendkim cannot chown correctly $file keys: $?";
 }
 
-chmod 0440, "/etc/opendkim/keys/default.private" ||
+chmod 0440, "/etc/opendkim/keys/default.private" or
     die "Opendkim cannot chmod correctly private keys: $?";
 
-chmod 0444, "/etc/opendkim/keys/default.txt" ||
+chmod 0444, "/etc/opendkim/keys/default.txt" or
     die "Opendkim cannot chmod correctly public keys: $?";
 
 #cp to a world readable place
-copy('/etc/opendkim/keys/default.txt','/etc/opendkim/') ||
+copy('/etc/opendkim/keys/default.txt','/etc/opendkim/') or
     die "cannot copy the public key default.txt : $?";
