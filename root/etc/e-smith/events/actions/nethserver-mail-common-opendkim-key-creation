@@ -35,7 +35,7 @@ if ((! -f "/etc/opendkim/keys/default.private") || (! -f "/etc/opendkim/keys/def
 my ($login,$pass,$uid,$gid) = getpwnam('opendkim')
     or die "opendkim not in passwd file";
 
-foreach my $file ( glob('/etc/opendkim/keys/*')) {
+foreach my $file ('/etc/opendkim/keys/default.private','/etc/opendkim/keys/default.txt') {
     chown $uid, $gid, $file or
         die "Opendkim cannot chown correctly $file keys: $?";
 }
