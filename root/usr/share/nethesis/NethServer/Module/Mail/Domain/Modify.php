@@ -171,6 +171,7 @@ class Modify extends \Nethgui\Controller\Table\Modify
             'delete' => 'Nethgui\Template\Table\Delete',
         );
         $view->setTemplate($templates[$this->getIdentifier()]);
+        $view['DkimSelector'] = 'default._domainKey';
     }
 
     /**
