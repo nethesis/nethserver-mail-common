@@ -4,4 +4,4 @@
 #
 
 smtpd_milters = { join (",\n ", @smtpd_milters); }
-
+non_smtpd_milters = { join (",\n ", @smtpd_milters); }
