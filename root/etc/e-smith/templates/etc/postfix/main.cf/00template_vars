@@ -76,6 +76,9 @@
     # Smtpd_milters
     # Milter used by opendkim
     #
-    push @smtpd_milters, 'unix:/var/run/opendkim/milter' if $opendkim{'status'} eq 'enabled';
+    if($opendkim{'status'} eq 'enabled') {
+        push @smtpd_milters, 'unix:/var/run/opendkim/milter';
+        push @non_smtpd_milters, 'unix:/var/run/opendkim/milter';
+    }
     '';
 }
