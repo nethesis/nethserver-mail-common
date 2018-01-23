@@ -1,6 +1,6 @@
 Summary: Common configuration for mail packages
 Name: nethserver-mail-common
-Version: 1.6.7
+Version: 1.6.6
 Release: 1%{?dist}
 License: GPL
 URL: %{url_prefix}/%{name}
