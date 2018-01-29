@@ -2,6 +2,8 @@
 
 $L['Create a new domain'] = 'Create a new domain';
 $L['Delete_label'] = 'Delete';
+$L['DisclaimerStatus_label'] = 'Append a legal note to sent messages';
+$L['DisclaimerText_label'] = '';
 $L['Domain_Title'] = 'Domains'; 
 $L['Key_label'] = 'Domain'; 
 $L['RelayHost_label'] = 'Relay host';
