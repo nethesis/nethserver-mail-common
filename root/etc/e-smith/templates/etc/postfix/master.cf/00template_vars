@@ -7,7 +7,6 @@
     @smtpd_public_options = (
 	'smtpd_helo_required=yes',
 	'strict_rfc821_envelopes=yes',
-	'smtpd_proxy_options=speed_adjust',
     );
 
     # options for submission servers:
@@ -17,7 +16,6 @@
       smtpd_sender_restrictions=
       smtpd_recipient_restrictions=$submission_recipient_policy
       strict_rfc821_envelopes=no
-      smtpd_proxy_options=speed_adjust
     );
 
     # The maximum number of smtpd processes spawned:
