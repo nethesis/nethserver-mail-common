@@ -74,7 +74,7 @@ my @domainTemplates = qw(
 foreach (qw(create modify delete)) {
     event_templates('domain-' . $_, @domainTemplates);
     event_actions('domain-'   . $_, 'nethserver-mail-postmap-update' => '30');
-    event_services('domain-'  . $_, 'postfix' => 'restart','opendkim' => 'restart');
+    event_services('domain-'  . $_, 'postfix' => 'restart');
 }
 
 #
