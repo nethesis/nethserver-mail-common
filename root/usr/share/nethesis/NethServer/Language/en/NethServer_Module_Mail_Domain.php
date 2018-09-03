@@ -12,4 +12,4 @@ $L['TransportType_Relay_label'] = 'Relay to another server';
 $L['Update domain `${0}`'] = 'Update domain `${0}`'; 
 $L['domain_label'] = 'Domain';
 $L['valid_relay_notprimarydomain'] = 'The local mailbox domain cannot be relayed';
-$L['DomainMustNotMatchFQDN'] = 'The domain "${0}" cannot be named like the fully qualified domain name';
+$L['DomainMustNotMatchFQDN'] = 'The domain name "${0}" must differ from the server name (FQDN)';
